@@ -47,22 +47,23 @@ public class Student {
     public void setBankAccount(int bankAccount) {
         this.bankAccount = bankAccount;
     }
-    public int getPayPerMonth(Apartment[] apartments) {
-        for (Apartment apartment : apartments){
-            return apartment.getPrice() / 3;
 
+    public int getPayPerMonth(Apartment apartment) {
+        if (apartment.getStudents() != null && apartment.getStudents().length > 0) {
+            // Делим цену квартиры на количество студентов, живущих в ней
+            return apartment.getPrice() / apartment.getStudents().length;
         }
         return 0;
     }
 
-    public int liveIn(Student[] students,Apartment[] apartments) {
-        int apartmentPrice = getPayPerMonth(apartments);
-        for (Student student : students) {
-            System.out.println("student.bankAccount = " + student.bankAccount);
-            return (student.getBankAccount() / apartmentPrice);
+    public int liveIn(Apartment apartment) {
+        int monthlyRent = getPayPerMonth(apartment);
+        if (monthlyRent > 0) {
+            return bankAccount / monthlyRent;
         }
         return 0;
     }
+
     @Override
     public String toString() {
         return "Student{" +

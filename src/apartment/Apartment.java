@@ -1,7 +1,6 @@
 package apartment;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class Apartment {
     private String title;
@@ -50,27 +49,34 @@ public class Apartment {
     public void setStudents(Student[] students) {
         this.students = students;
     }
-    public void getApartment(String title, Apartment[] apartments){
-        for (Apartment apartment : apartments){
-            if (apartment.getTitle().equals(title)){
-                System.out.println("apartment = " + apartment);
-                break;
-            }else {
-                System.out.println("invalid apartment");
+
+    public static void getApartment(String title, Apartment[] apartments) {
+        for (Apartment apartment : apartments) {
+            if (apartment.getTitle().equalsIgnoreCase(title)) {
+                System.out.println("Apartment found: " + apartment);
+                return;
             }
         }
+        System.out.println("Invalid apartment!");
     }
 
-
-
+    public void payPerMonth() {
+        if (students == null || students.length == 0) {
+            System.out.println("No students in this apartment.");
+            return;
+        }
+        int perStudent = price / students.length;
+        System.out.println("Each student must pay: " + perStudent + " per month.");
+    }
 
     @Override
     public String toString() {
+        String studentsInfo = (students == null || students.length == 0) ? "No students assigned." : Arrays.toString(students);
         return "Apartment{" +
                "title='" + title + '\'' +
                ", price=" + price +
                ", address='" + address + '\'' +
-               ", students=" + Arrays.toString(students) +
+               ", students=" + studentsInfo +
                '}';
     }
 }
